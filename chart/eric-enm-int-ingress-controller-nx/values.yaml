@@ -1,0 +1,59 @@
+global:
+  pullSecret:
+  registry:
+    url: armdocker.rnd.ericsson.se
+  ingress:
+    enmHost:
+  timezone:
+  enmProperties:
+    COM_INF_LDAP_ROOT_SUFFIX:
+    COM_INF_LDAP_ADMIN_ACCESS:
+    COM_INF_LDAP_ADMIN_CN:
+    COM_INF_LDAP_PORT:
+    dps_persistence_provider:
+    LDAP_ADMIN_CN:
+    LDAP_ADMIN_PASSWORD:
+    postgres_service:
+    postgresql01_admin_password:
+    #parameters for connecting to elasticsearch
+    hqs_persistence_provider:
+    hqs_persistence_provider_port:
+productNumber: CXC Placeholder
+# R-State of the product. R State should match helm chart version (3.1.0 -> R2A)
+# To automate it when packaging the helm chart rstate can be generated
+# and below value replaced with correct R-State
+productRevision: R1A
+labels: {}
+imageCredentials:
+  repoPath: proj-enm
+  pullPolicy: IfNotPresent
+  pullSecret:
+  registry:
+    url:
+eric-enm-common-helmchart-library:
+  enabled: true
+service:
+  name: ingress-nginx
+  labels:
+securityPolicy:
+  rolename: ingress-nginx
+nodeSelector: {}
+credmController:
+  name: eric-enm-credm-controller
+  port: 5001
+jobs:
+  jobAction: certrequest
+  certRequest:
+    imageName: enm-certrequestjob-container
+    pullPolicy: IfNotPresent
+    tag: 1.52.0-33
+    includeLoadBalancer: true
+    resources:
+      requests:
+        enabled: true
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        enabled: true
+        cpu: 1000m
+        memory: 512Mi
